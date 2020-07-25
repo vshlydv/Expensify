@@ -1,23 +1,25 @@
 import * as firebase from "firebase";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAvOEGjqSCLnULL3AK_1xIrQTkJgymNE5o",
-    authDomain: "expensify-f9ad0.firebaseapp.com",
-    databaseURL: "https://expensify-f9ad0.firebaseio.com",
-    projectId: "expensify-f9ad0",
-    storageBucket: "expensify-f9ad0.appspot.com",
-    messagingSenderId: "677857782739",
-    appId: "1:677857782739:web:cf0b27b6debec5500edd26",
-    measurementId: "G-TQEDJDX8QF"
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID
   };
 
 firebase.initializeApp(firebaseConfig);
 
 const database = firebase.database();
 
-database.ref("expenses").on("child_changed", (snapshot) => {
-    console.log(snapshot.key, snapshot.val());
-});
+export { firebase, database as default };
+
+// database.ref("expenses").on("child_changed", (snapshot) => {
+//     console.log(snapshot.key, snapshot.val());
+// });
 
 // database.ref("expenses")
 //   .on("value", (snapShot) => {
