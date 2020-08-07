@@ -1,73 +1,67 @@
-import { createStore } from "redux";
+import { createStore } from 'redux';
 
-// Action generators
-const increamentCount = ({ increamentBy = 1} = {}) => ({
-    type: "INCREAMENT",
-    increamentBy
-})
+// Action generators - functions that return action objects
 
-const decreamentCount = ({ decreamentBy = 1} = {}) => ({
-    type: "DECREAMENT",
-    decreamentBy
-})
+const incrementCount = ({ incrementBy = 1 } = {}) => ({
+  type: 'INCREMENT',
+  incrementBy
+});
 
-const setCount = ({ count = 0} = {}) => ({
-    type: "SET",
-    count
-})
+const decrementCount = ({ decrementBy = 1 } = {}) => ({
+  type: 'DECREMENT',
+  decrementBy
+});
+
+const setCount = ({ count }) => ({
+  type: 'SET',
+  count
+});
+
+const resetCount = () => ({
+  type: 'RESET'
+});
 
 // Reducers
-// 1. They must be pure functions.
-// 2. Never change state and action passed in reducer
+// 1. Reducers are pure functions
+// 2. Never change state or actiton
 
-const countReducer = (state = {count: 0}, action) => {
-    switch(action.type) {
-        case "INCREAMENT":
-            return {
-                count: state.count + action.increamentBy
-            };
-            
-        case "DECREAMENT":
-            return {
-                count: state.count - action.decreamentBy
-            };
-
-        case "RESET":
-            return {
-                count: 0
-            };
-            
-        case "SET":
-            return {
-                count: action.count
-            };
-        default:
-            return {
-                count: 0
-            };
-    }
-}
+const countReducer = (state = { count: 0 }, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return {
+        count: state.count + action.incrementBy
+      };
+    case 'DECREMENT':
+      return {
+        count: state.count - action.decrementBy
+      };
+    case 'SET':
+      return {
+        count: action.count
+      };
+    case 'RESET':
+      return {
+        count: 0
+      };
+    default:
+      return state;
+  }
+};
 
 const store = createStore(countReducer);
 
-//Actions - INCREAMENT, DECREAMENT & RESET
-
 const unsubscribe = store.subscribe(() => {
-    console.log(store.getState());
-})
+  console.log(store.getState());
+});
 
-store.dispatch(increamentCount());
+store.dispatch(incrementCount({ incrementBy: 5 }))
 
-store.dispatch(increamentCount({ increamentBy: 5 }));
+store.dispatch(incrementCount());
 
-//Action
-// store.dispatch({
-//     type: "RESET"
-// });
+store.dispatch(resetCount());
 
-store.dispatch(decreamentCount());
+store.dispatch(decrementCount());
 
-store.dispatch(decreamentCount({ decreamentBy: 5 }));
+store.dispatch(decrementCount({ decrementBy: 10 }));
 
-
-store.dispatch(setCount({ count: 101 }));
+store.dispatch(setCount({ count: -100 }));

@@ -1,8 +1,7 @@
-import React from "react";
-import moment from "moment";
-import numeral from "numeral";
-import { Link } from "react-router-dom";
-
+import React from 'react';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
+import numeral from 'numeral';
 
 // load a locale
 numeral.register('locale', 'fr', {
@@ -27,14 +26,14 @@ numeral.register('locale', 'fr', {
 // switch between locales
 numeral.locale('fr');
 
-const ExpenseListItem =  ({ id, description, amount, createdAt, dispatch }) => (
-    <li>
-        <h3><Link to = {`/edit/${id}`}>{description}</Link></h3>
-        <p>Rs{numeral(amount).format("0,0.00")}/-
-            :
-            {moment(createdAt).format(" DD/MM/YYYY")}
-        </p>
-    </li>
-)
+const ExpenseListItem = ({ id, description, amount, createdAt }) => (
+  <Link className="list-item" to={`/edit/${id}`}>
+    <div>
+      <h3 className="list-item__title">{description}</h3>
+      <span className="list-item__sub-title">{moment(createdAt).format('MMMM Do, YYYY')}</span>
+    </div>
+    <h3 className="list-item__data">Rs{numeral(amount / 100).format('0,0.00')}/-</h3>
+  </Link>
+);
 
 export default ExpenseListItem;
